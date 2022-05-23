@@ -1,4 +1,4 @@
-package com.company;
+package databases.influx;
 
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
@@ -6,7 +6,7 @@ import org.influxdb.dto.Pong;
 import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
 
-public class Main {
+public class InfluxTest {
 
     public static void main(String[] args) {
         String databaseURL = "http://127.0.0.1:8086";
@@ -25,7 +25,7 @@ public class Main {
         System.out.println(influxDB.databaseExists(dbName));
 
 
-     /*   QueryResult queryResult = influxDB.query(new Query("select * from cpu",dbName));
-        System.out.println(queryResult);*/
+        QueryResult queryResult = influxDB.query(new Query("select * from cpu",dbName));
+        System.out.println(queryResult);
     }
 }
