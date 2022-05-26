@@ -8,13 +8,14 @@ public class DBUtil {
     private static final String USERNAME = "test";
     private static final String PASSWORD = "123";
     private static final String M_CONN_STRING = "jdbc:mysql://localhost/mybase";
+    private static final String M_CONN_STRING_COURSES = "jdbc:mysql://localhost/explorecalifornia";
 
     public static Connection getConnection(DBType dbType) throws SQLException {
         switch (dbType) {
             case MYSQL:
                 return DriverManager.getConnection(M_CONN_STRING, USERNAME, PASSWORD);
-            case ORACLEDB:
-                return null;
+            case COURSES:
+                return DriverManager.getConnection(M_CONN_STRING_COURSES, USERNAME, PASSWORD);
             case INFLUXDB:
                 return null;
             default:

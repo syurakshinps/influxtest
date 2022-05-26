@@ -1,5 +1,5 @@
 package databases;
 
 public enum DBType {
-    MYSQL,INFLUXDB,ORACLEDB
+    MYSQL,INFLUXDB,ORACLEDB,COURSES
 }
