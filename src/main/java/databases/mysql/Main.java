@@ -28,7 +28,7 @@ public class Main {
             System.out.println("New line with pk " + bean.getAdminId() + " was inserted");
         } else
         {
-            System.err.println("No    rows were affected");
+            System.err.println("No rows were affected");
         }
 
     }
