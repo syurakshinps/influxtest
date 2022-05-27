@@ -6,7 +6,9 @@ import java.sql.SQLException;
 
 public class Tours {
 
-    public static void displayData(ResultSet rs) throws SQLException {
+    public static void displayData(ResultSet rs, int nRows) throws SQLException {
+        System.out.println(nRows);
+
         while (rs.next()) {
 
             StringBuffer buffer = new StringBuffer();
