@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-     //   AdminManager.displayAllRows();
+        AdminManager.displayAllRows();
 
         int adminId = 1;
                 Admin admin = AdminManager.getRow(adminId);
@@ -19,5 +19,17 @@ public class Main {
             System.out.println("password: " + admin.getPassword());
 
         }
+
+        Admin bean = new Admin();
+        bean.setUserName("Vasya");
+        bean.setPassword("123");
+        boolean result = AdminManager.insert(bean);
+        if (result){
+            System.out.println("New line with pk " + bean.getAdminId() + " was inserted");
+        } else
+        {
+            System.err.println("No    rows were affected");
+        }
+
     }
 }

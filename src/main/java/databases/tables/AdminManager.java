@@ -59,5 +59,40 @@ public class AdminManager {
             }
         }
     }
+
+    public static boolean insert (Admin bean) throws SQLException {
+        String sql = "INSERT into admin (userName, password) " +
+                "VALUES(?, ?)";
+        ResultSet keys  = null;
+        try (
+                Connection conn = DBUtil.getConnection(DBType.COURSES);
+                PreparedStatement stmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+                )
+        {
+
+            stmt.setString(1, bean.getUserName());
+            stmt.setString(2, bean.getPassword());
+            int affected = stmt.executeUpdate();
+
+            if (affected == 1) {
+            keys = stmt.getGeneratedKeys();
+            keys.next();
+            int newKey = keys.getInt(1);
+            bean.setAdminId(newKey);
+
+            } else {
+                System.err.println("No rows were affected");
+                return false;
+            }
+
+        }catch (SQLException e){
+                e.printStackTrace();
+                return false;
+        } finally {
+                if (keys != null) keys.close();
+        }
+        return true;
+
+    }
 }
 
