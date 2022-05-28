@@ -16,7 +16,7 @@ public class AdminManager {
                 ResultSet rs = stmt.executeQuery(sql);
         ) {
 
-           System.out.println("admin table: ");
+            System.out.println("admin table: ");
             while (rs.next()) {
                 StringBuffer buffer = new StringBuffer();
                 buffer.append(rs.getInt("adminId") + ": ");
@@ -41,7 +41,7 @@ public class AdminManager {
             stmt.setInt(1, adminId);
             rs = stmt.executeQuery();
 
-            if (rs.next()){
+            if (rs.next()) {
                 Admin admin = new Admin();
                 admin.setAdminId(adminId);
                 admin.setUserName(rs.getObject("UserName", String.class));
@@ -53,46 +53,70 @@ public class AdminManager {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
-        }finally {
-            if (rs != null){
+        } finally {
+            if (rs != null) {
                 rs.close();
             }
         }
     }
 
-    public static boolean insert (Admin bean) throws SQLException {
+    public static boolean insert(Admin bean) throws SQLException {
         String sql = "INSERT into admin (userName, password) " +
                 "VALUES(?, ?)";
-        ResultSet keys  = null;
+        ResultSet keys = null;
         try (
                 Connection conn = DBUtil.getConnection(DBType.COURSES);
-                PreparedStatement stmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-                )
-        {
+                PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ) {
 
             stmt.setString(1, bean.getUserName());
             stmt.setString(2, bean.getPassword());
             int affected = stmt.executeUpdate();
 
             if (affected == 1) {
-            keys = stmt.getGeneratedKeys();
-            keys.next();
-            int newKey = keys.getInt(1);
-            bean.setAdminId(newKey);
+                keys = stmt.getGeneratedKeys();
+                keys.next();
+                int newKey = keys.getInt(1);
+                bean.setAdminId(newKey);
 
             } else {
                 System.err.println("No rows were affected");
                 return false;
             }
 
-        }catch (SQLException e){
-                e.printStackTrace();
-                return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         } finally {
-                if (keys != null) keys.close();
+            if (keys != null) keys.close();
         }
         return true;
 
+    }
+
+    public static boolean update(Admin bean) throws SQLException {
+        String sql = "UPDATE admin SET " +
+                "userName = ?, password = ? " +
+                "WHERE adminId = ?";
+        try (
+                Connection conn = DBUtil.getConnection(DBType.COURSES);
+                PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+
+            stmt.setString(1, bean.getUserName());
+            stmt.setString(2, bean.getPassword());
+            stmt.setInt(3, bean.getAdminId());
+
+            int affected = stmt.executeUpdate();
+            if (affected == 1) {
+                return true;
+            } else {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
 

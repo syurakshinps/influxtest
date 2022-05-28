@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         AdminManager.displayAllRows();
 
-        int adminId = 1;
+        int adminId = 2;
                 Admin admin = AdminManager.getRow(adminId);
         if (admin == null) {
             System.out.println("No rows were found");
@@ -21,7 +21,7 @@ public class Main {
         }
 
         Admin bean = new Admin();
-        bean.setUserName("Vasya");
+        bean.setUserName("Fedya");
         bean.setPassword("123");
         boolean result = AdminManager.insert(bean);
         if (result){
@@ -29,6 +29,12 @@ public class Main {
         } else
         {
             System.err.println("No rows were affected");
+        }
+        admin.setPassword("123password123");
+        if (AdminManager.update(admin)){
+            System.out.println("ok");
+        }else{
+            System.err.println("whoops");
         }
 
     }
