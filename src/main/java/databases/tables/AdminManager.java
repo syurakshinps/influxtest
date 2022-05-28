@@ -118,5 +118,28 @@ public class AdminManager {
             return false;
         }
     }
+
+    public static boolean delete(int adminId) throws SQLException {
+
+        String sql = "DELETE from admin " +
+                "WHERE adminId = ?";
+        try (
+                Connection conn = DBUtil.getConnection(DBType.COURSES);
+                PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+            stmt.setInt(1, adminId);
+            int affected = stmt.executeUpdate();
+
+            if (affected == 1) {
+                return true;
+            } else {
+                System.err.println("no rows affected");
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
 

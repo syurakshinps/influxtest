@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         AdminManager.displayAllRows();
 
-        int adminId = 2;
+        int adminId = 1;
                 Admin admin = AdminManager.getRow(adminId);
         if (admin == null) {
             System.out.println("No rows were found");
@@ -37,5 +37,12 @@ public class Main {
             System.err.println("whoops");
         }
 
+
+        if (AdminManager.delete(3)){
+            System.out.println("deleted 3");
+        }else
+        {
+            System.err.println("something went wrong");
+        }
     }
 }
