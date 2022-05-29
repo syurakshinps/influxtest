@@ -1,12 +1,17 @@
 package databases.mysql;
 
+import databases.DBType;
 import databases.beans.Admin;
+import databases.beans.ConnectionManager;
 import databases.tables.AdminManager;
 
 import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
+
+        ConnectionManager.getInstance().setDBType(DBType.COURSES);
+
         AdminManager.displayAllRows();
 
         int adminId = 1;
@@ -21,8 +26,8 @@ public class Main {
         }
 
         Admin bean = new Admin();
-        bean.setUserName("Fedya");
-        bean.setPassword("123");
+        bean.setUserName("John");
+        bean.setPassword("1234");
         boolean result = AdminManager.insert(bean);
         if (result){
             System.out.println("New line with pk " + bean.getAdminId() + " was inserted");
@@ -30,7 +35,7 @@ public class Main {
         {
             System.err.println("No rows were affected");
         }
-        admin.setPassword("123password123");
+        admin.setPassword("1234password1234");
         if (AdminManager.update(admin)){
             System.out.println("ok");
         }else{
@@ -38,11 +43,13 @@ public class Main {
         }
 
 
-        if (AdminManager.delete(3)){
+        if (AdminManager.delete(4)){
             System.out.println("deleted 3");
         }else
         {
             System.err.println("something went wrong");
         }
+
+        ConnectionManager.getInstance().close();
     }
 }

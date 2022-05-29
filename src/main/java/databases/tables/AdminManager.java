@@ -4,14 +4,18 @@ import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
 import databases.DBType;
 import databases.DBUtil;
 import databases.beans.Admin;
+import databases.beans.ConnectionManager;
 
 import java.sql.*;
 
 public class AdminManager {
+
+    private static Connection conn = ConnectionManager.getInstance().getConnection();
+
     public static void displayAllRows() {
         String sql = "SELECT adminId, password, userName FROM admin";
         try (
-                Connection conn = DBUtil.getConnection(DBType.COURSES);
+       //         Connection conn = DBUtil.getConnection(DBType.COURSES);
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
         ) {
@@ -35,7 +39,7 @@ public class AdminManager {
         String sql = "SELECT * from admin where adminId = ?";
         ResultSet rs = null;
         try (
-                Connection conn = DBUtil.getConnection(DBType.COURSES);
+    //            Connection conn = DBUtil.getConnection(DBType.COURSES);
                 PreparedStatement stmt = conn.prepareStatement(sql);
         ) {
             stmt.setInt(1, adminId);
@@ -65,7 +69,7 @@ public class AdminManager {
                 "VALUES(?, ?)";
         ResultSet keys = null;
         try (
-                Connection conn = DBUtil.getConnection(DBType.COURSES);
+    //            Connection conn = DBUtil.getConnection(DBType.COURSES);
                 PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ) {
 
@@ -99,7 +103,7 @@ public class AdminManager {
                 "userName = ?, password = ? " +
                 "WHERE adminId = ?";
         try (
-                Connection conn = DBUtil.getConnection(DBType.COURSES);
+    //            Connection conn = DBUtil.getConnection(DBType.COURSES);
                 PreparedStatement stmt = conn.prepareStatement(sql);
         ) {
 
@@ -124,7 +128,7 @@ public class AdminManager {
         String sql = "DELETE from admin " +
                 "WHERE adminId = ?";
         try (
-                Connection conn = DBUtil.getConnection(DBType.COURSES);
+     //           Connection conn = DBUtil.getConnection(DBType.COURSES);
                 PreparedStatement stmt = conn.prepareStatement(sql);
         ) {
             stmt.setInt(1, adminId);

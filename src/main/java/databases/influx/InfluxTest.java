@@ -1,5 +1,6 @@
 package databases.influx;
 
+
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.Pong;
@@ -24,8 +25,13 @@ public class InfluxTest {
         String dbName = "telegrafdb";
         System.out.println(influxDB.databaseExists(dbName));
 
+String sql = "SELECT 100 - mean(\"usage_idle\") FROM \"cpu\" WHERE (\"cpu\" =~ /cpu[0-9].*/) " +
+        "AND time >= 1653598800000ms and time <= 1653685199000ms GROUP BY time(1m)";
+        QueryResult queryResult = influxDB.query(new Query(sql,dbName));
 
-        QueryResult queryResult = influxDB.query(new Query("select * from cpu",dbName));
+
+
+
         System.out.println(queryResult);
     }
 }
